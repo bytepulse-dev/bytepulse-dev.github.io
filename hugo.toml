@@ -1,0 +1,28 @@
+baseURL = "https://bytepulse-dev.github.io/"
+languageCode = "ru"
+defaultContentLanguage = "ru"
+title = "BytePulse"
+theme = "PaperMod"
+
+[pagination]
+  pagerSize = 10
+
+[params]
+  description = "IT-новости без воды — ИИ, кибербезопасность, IT-индустрия"
+  ShowReadingTime = false
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  homeInfoParams = { Title = "BytePulse", Content = "Технологии, ИИ и кибербезопасность — коротко и по делу" }
+
+[taxonomies]
+  category = "categories"
+
+[outputs]
+  home = ["HTML", "RSS"]
+
+[params.assets]
+  customCSS = []
+  customJS  = []
+  
+[markup.goldmark.renderer]
+  unsafe = true
