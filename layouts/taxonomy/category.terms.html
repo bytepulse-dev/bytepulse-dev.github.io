@@ -1,0 +1,52 @@
+{{ define "main" }}
+<style>
+  .cats-wrap { max-width: 1280px; margin: 0 auto; padding: 48px 32px; }
+  .cats-wrap h1 {
+    font-family: 'Manrope', sans-serif;
+    font-size: 32px; font-weight: 800;
+    letter-spacing: -1px; color: #0f0f0f;
+    margin-bottom: 8px;
+  }
+  .cats-wrap .sub { font-size: 15px; color: #6b6b6b; margin-bottom: 40px; }
+  .cats-big-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .cat-big-card {
+    background: #fff;
+    border: 1px solid #e8e8e6;
+    border-radius: 16px;
+    padding: 28px;
+    display: flex; align-items: center; gap: 20px;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  .cat-big-card:hover { border-color: #2563eb; box-shadow: 0 4px 20px rgba(37,99,235,.08); }
+  .cat-big-icon { font-size: 40px; flex-shrink: 0; }
+  .cat-big-name {
+    font-family: 'Manrope', sans-serif;
+    font-size: 18px; font-weight: 700; color: #0f0f0f;
+    margin-bottom: 4px;
+  }
+  .cat-big-count { font-size: 13px; color: #9b9b9b; }
+  @media (max-width: 640px) {
+    .cats-wrap { padding: 32px 16px; }
+    .cats-big-grid { grid-template-columns: 1fr; }
+  }
+</style>
+<div class="cats-wrap">
+  <h1>Темы</h1>
+  <p class="sub">Все категории материалов на BytePulse</p>
+  <div class="cats-big-grid">
+    {{ range .Data.Terms.ByCount }}
+    <a class="cat-big-card" href="{{ .Page.RelPermalink }}">
+      <div class="cat-big-icon">{{ if eq .Page.Title "ai" }}🤖{{ else if eq .Page.Title "security" }}🔐{{ else if eq .Page.Title "it" }}🖥{{ else if eq .Page.Title "tools" }}🛠{{ else }}📰{{ end }}</div>
+      <div>
+        <div class="cat-big-name">{{ if eq .Page.Title "ai" }}Искусственный интеллект{{ else if eq .Page.Title "security" }}Кибербезопасность{{ else if eq .Page.Title "it" }}IT-индустрия{{ else if eq .Page.Title "tools" }}Инструменты{{ else }}{{ .Page.Title }}{{ end }}</div>
+        <div class="cat-big-count">{{ .Count }} {{ if eq .Count 1 }}материал{{ else if le .Count 4 }}материала{{ else }}материалов{{ end }}</div>
+      </div>
+    </a>
+    {{ end }}
+  </div>
+</div>
+{{ end }}

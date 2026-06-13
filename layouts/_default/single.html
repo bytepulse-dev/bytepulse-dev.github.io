@@ -1,0 +1,193 @@
+{{ define "main" }}
+<style>
+  .post-wrap { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+  .post-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 48px;
+    padding: 48px 0;
+    align-items: start;
+  }
+  .breadcrumb {
+    font-size: 13px; color: #9b9b9b;
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 24px;
+  }
+  .breadcrumb a { color: #2563eb; }
+  .breadcrumb a:hover { text-decoration: underline; }
+  .post-header .cat { margin-bottom: 16px; }
+  .post-header h1 {
+    font-family: 'Manrope', sans-serif;
+    font-size: clamp(26px, 3vw, 40px);
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -1px;
+    color: #0f0f0f;
+    margin-bottom: 20px;
+  }
+  .post-summary {
+    font-size: 17px;
+    color: #4b4b4b;
+    line-height: 1.65;
+    border-left: 3px solid #2563eb;
+    padding-left: 16px;
+    margin-bottom: 24px;
+  }
+  .post-meta {
+    font-size: 13px; color: #9b9b9b;
+    padding-bottom: 32px;
+    border-bottom: 1px solid #e8e8e6;
+    margin-bottom: 32px;
+  }
+  .post-content {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #2a2a2a;
+  }
+  .post-content p { margin-bottom: 20px; }
+  .post-content h2 {
+    font-family: 'Manrope', sans-serif;
+    font-size: 22px; font-weight: 700;
+    margin: 36px 0 16px;
+    color: #0f0f0f;
+  }
+  .post-content h3 {
+    font-size: 18px; font-weight: 600;
+    margin: 28px 0 12px;
+  }
+  .post-content a { color: #2563eb; text-decoration: underline; }
+  .post-content ul, .post-content ol {
+    margin: 0 0 20px 20px;
+  }
+  .post-content li { margin-bottom: 6px; }
+
+  .tg-cta {
+    display: flex; align-items: center; gap: 16px;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-top: 40px;
+  }
+  .tg-cta-icon { font-size: 32px; flex-shrink: 0; }
+  .tg-cta-text { flex: 1; }
+  .tg-cta-text p { font-size: 14px; color: #4b4b4b; margin: 0; }
+  .tg-cta-text strong { display: block; font-size: 15px; color: #1a1a1a; margin-bottom: 4px; }
+  .tg-cta-btn {
+    font-size: 13px; font-weight: 600;
+    color: #fff; background: #2563eb;
+    padding: 9px 18px; border-radius: 8px;
+    white-space: nowrap;
+    transition: background .15s;
+    flex-shrink: 0;
+  }
+  .tg-cta-btn:hover { background: #1d4ed8; }
+
+  /* Sidebar */
+  .sidebar { position: sticky; top: 80px; }
+  .sidebar-block {
+    background: #fff;
+    border: 1px solid #e8e8e6;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .sidebar-title {
+    font-size: 11px; font-weight: 600; letter-spacing: 1px;
+    text-transform: uppercase; color: #9b9b9b;
+    margin-bottom: 16px;
+  }
+  .sidebar-post {
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0ee;
+  }
+  .sidebar-post:last-child { border-bottom: none; padding-bottom: 0; }
+  .sidebar-post .cat { margin-bottom: 6px; }
+  .sidebar-post h4 {
+    font-size: 13px; font-weight: 600;
+    line-height: 1.4; color: #1a1a1a;
+    margin-bottom: 4px;
+  }
+  .sidebar-post h4 a:hover { color: #2563eb; }
+  .sidebar-post .date { font-size: 11px; color: #9b9b9b; }
+
+  .cats-list { display: flex; flex-direction: column; gap: 8px; }
+  .cats-list a {
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 14px; color: #1a1a1a;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0ee;
+  }
+  .cats-list a:last-child { border-bottom: none; }
+  .cats-list a:hover { color: #2563eb; }
+  .cats-list .cnt { font-size: 12px; color: #9b9b9b; }
+
+  @media (max-width: 1024px) {
+    .post-layout { grid-template-columns: 1fr; }
+    .sidebar { position: static; }
+    .post-wrap { padding: 0 16px; }
+  }
+</style>
+
+<div class="post-wrap">
+  <div class="post-layout">
+    <article>
+      <div class="breadcrumb">
+        <a href="/">Главная</a> › <a href="/posts/">Статьи</a> › {{ .Title }}
+      </div>
+      <div class="post-header">
+        {{ with .Params.categories }}
+          {{ range first 1 . }}
+            <span class="cat cat-{{ . }}">{{ if eq . "ai" }}🤖 Искусственный интеллект{{ else if eq . "security" }}🔐 Кибербезопасность{{ else if eq . "it" }}🖥 IT-индустрия{{ else if eq . "tools" }}🛠 Инструменты{{ else }}{{ . }}{{ end }}</span>
+          {{ end }}
+        {{ end }}
+        <h1>{{ .Title }}</h1>
+        {{ with .Params.summary }}<p class="post-summary">{{ . }}</p>{{ end }}
+        <div class="post-meta">{{ .Date.Format "2 January 2006" }}</div>
+      </div>
+      <div class="post-content">
+        {{ .Content }}
+      </div>
+      <div class="tg-cta">
+        <div class="tg-cta-icon">📲</div>
+        <div class="tg-cta-text">
+          <strong>Подпишись на BytePulse в Telegram</strong>
+          <p>Новости первыми — коротко и по делу</p>
+        </div>
+        <a class="tg-cta-btn" href="https://t.me/BytePulsechannel" target="_blank">Перейти →</a>
+      </div>
+    </article>
+
+    <aside class="sidebar">
+      <div class="sidebar-block">
+        <div class="sidebar-title">Другие статьи</div>
+        {{ $current := . }}
+        {{ range first 5 (where .Site.RegularPages "Type" "posts") }}
+          {{ if ne .RelPermalink $current.RelPermalink }}
+          <div class="sidebar-post">
+            {{ with .Params.categories }}
+              {{ range first 1 . }}
+                <span class="cat cat-{{ . }}">{{ if eq . "ai" }}ИИ{{ else if eq . "security" }}Безопасность{{ else if eq . "it" }}IT{{ else if eq . "tools" }}Инструменты{{ else }}{{ . }}{{ end }}</span>
+              {{ end }}
+            {{ end }}
+            <h4><a href="{{ .RelPermalink }}">{{ .Title }}</a></h4>
+            <span class="date">{{ .Date.Format "2 Jan 2006" }}</span>
+          </div>
+          {{ end }}
+        {{ end }}
+      </div>
+      <div class="sidebar-block">
+        <div class="sidebar-title">Темы</div>
+        <div class="cats-list">
+          {{ range .Site.Taxonomies.categories.ByCount }}
+          <a href="{{ .Page.RelPermalink }}">
+            <span>{{ if eq .Page.Title "ai" }}🤖 ИИ{{ else if eq .Page.Title "security" }}🔐 Безопасность{{ else if eq .Page.Title "it" }}🖥 IT{{ else if eq .Page.Title "tools" }}🛠 Инструменты{{ else }}{{ .Page.Title }}{{ end }}</span>
+            <span class="cnt">{{ .Count }}</span>
+          </a>
+          {{ end }}
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+{{ end }}

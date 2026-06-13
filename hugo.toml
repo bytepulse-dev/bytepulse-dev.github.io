@@ -2,7 +2,7 @@ baseURL = "https://bytepulse-dev.github.io/"
 languageCode = "ru"
 defaultContentLanguage = "ru"
 title = "BytePulse"
-theme = "PaperMod"
+# theme = "PaperMod"
 
 [pagination]
   pagerSize = 10
