@@ -65,7 +65,7 @@
 
 {{ $pages := where .Site.RegularPages "Type" "posts" }}
 {{ $hero := index $pages 0 }}
-{{ $sidePages := first 4 (after 1 $pages) }}
+{{ $sidePages := first 3 (after 1 $pages) }}
 {{ $latestPages := first 9 (after 1 $pages) }}
 
 {{ with $hero }}
